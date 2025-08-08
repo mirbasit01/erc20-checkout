@@ -1,7 +1,17 @@
 import React from 'react';
 import { PayButton } from './PayButton';
 
-const ProductCard = ({ product }) => {
+type Product = {
+  name: string;
+  price: number;
+  image: string;
+};
+
+type ProductCardProps = {
+  product: Product;
+};
+
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden w-4/5 lg:w-2/5">

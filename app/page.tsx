@@ -6,7 +6,7 @@ export default function Home() {
       <ProductCard product={{
           image: "/headset-photo.png",
           name: "Futuristic VR Headset",
-          price: 19
+          price: 1
         }} 
       />
     </>
