@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { sepolia } from 'viem/chains';
 import { contractAddress } from '@/utils/contractaddress';
 import { contractABI } from '@/utils/contractABI';
+import TokenBalance from './TokenBalance';
+import { useWallet } from '@/hook/useWallet';
 
 
 export const PayButton = ({ price }: { price: number }) => {
@@ -15,6 +17,9 @@ export const PayButton = ({ price }: { price: number }) => {
   const [started, setStarted] = useState(false)
   const [errors, setErrors] = useState<string | undefined>()
   const [completed, setCompleted] = useState(false)
+
+
+  const { connectWallet, disconnectWallet } = useWallet()
 
   const handlePayment = async () => {
     try {
@@ -30,7 +35,7 @@ export const PayButton = ({ price }: { price: number }) => {
         functionName: 'transfer',
         abi:contractABI,
         args: [
-          '0x64498163f2b3E5AA871d335F4CBA6d5b5DcdD6BA',
+          '0xc748afDF4651ce619848202584868BAaC0C763e4',
           price * 1000000,
         ],
       })
@@ -45,6 +50,10 @@ export const PayButton = ({ price }: { price: number }) => {
 
   return (
     <>
+   <button onClick={connectWallet} style={{color: 'black', border: '1px solid black', padding: '8px 16px', borderRadius: '4px'}}>
+      Connect Wallet
+    
+   </button>
     <p className='text-black'>
       {address}
     </p>
@@ -59,6 +68,10 @@ export const PayButton = ({ price }: { price: number }) => {
       )}
       {completed && <p className='text-stone-800 mt-2 bg-green-200 rounded-md text-sm py-2 px-4'>Thank you for your payment.</p>}
       {errors && <p className='text-stone-800 mt-2 bg-red-200 rounded-md text-sm py-2 px-4'>{errors}</p>}
+
+     <div>
+       <TokenBalance />
+     </div>
     </>
   )
 }
