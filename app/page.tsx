@@ -4,9 +4,9 @@ export default function Home() {
   return (
     <>
       <ProductCard product={{
-          image: "/headset-photo.png",
+          image: "/headset-photno.png",
           name: "Futuristic VR Headset",
-          price: 1
+          price: 50
         }} 
       />
     </>

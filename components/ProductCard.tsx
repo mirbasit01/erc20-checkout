@@ -14,7 +14,7 @@ type ProductCardProps = {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden w-4/5 lg:w-2/5">
+      <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden w-4/5 lg:w-4/5">
         <div className="md:flex">
           <div className="md:flex-shrink-0">
             <img className="h-48 w-full object-cover md:w-48" src={product.image} alt={product.name} />
