@@ -15,9 +15,9 @@ export const useWallet = () => {
         console.log('Available connectors:', connectors.map(c => ({ id: c.id, name: c.name })))
         console.log('MetaMask connector found:', metaMaskConnector)
 
-        if (metaMaskConnector) {
+        if (metaMaskConnector)  {
 
-            try {
+            try  {
                 await connect({ connector: metaMaskConnector })
                 console.log('Wallet connected successfully')
             } catch (error) {

@@ -11,6 +11,7 @@ import { useWallet } from '@/hook/useWallet';
 import { parseUnits } from 'viem'
 import { config } from '@/config/wagmi';
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core'
+import TokenTransactions from './TokenTransactions';
 
 
 export const PayButton = ({ price }: { price: number }) => {
@@ -47,21 +48,35 @@ export const PayButton = ({ price }: { price: number }) => {
         functionName: 'transfer',
         args: [toAddress, amount],
       });
+      setStarted(true);
       const hash = await writeContract(config, request);
+      setErrors("Transaction sent, waiting for confirmation...");
       const receipt = await waitForTransactionReceipt(config, { hash });
       console.log("Transaction receipt:", receipt);
       if (receipt.status === 'success') {
-        setCompleted(true);
+        setErrors('')
         setTxHash(hash);
+        setCompleted(true);
+        // setTimeout(() => {
+        //   setCompleted(true);
+        // }, 3000); 
       } else {
         setErrors("Transaction failed on-chain.");
+        // setTimeout(() => {
+        //   setErrors(undefined);
+        // }, 3000);
       }
-
+      setAmountuser('')
+      setToAddress('')
       setStarted(false);
+
     } catch (err) {
       console.log(err)
       setStarted(false)
       setErrors("Payment failed. Please try again.")
+      // setTimeout(() => {
+      //   setErrors(undefined);
+      // }, 3000);
     }
   }
 
@@ -73,6 +88,9 @@ export const PayButton = ({ price }: { price: number }) => {
       localStorage.removeItem('signed')
       localStorage.removeItem('wagmi.connected')
       localStorage.removeItem('wagmi.wallet')
+      localStorage.removeItem('ally-supports-cache')
+      localStorage.removeItem('wagmi.io.metamask.disconnected')
+      localStorage.removeItem('wagmi.store')
       console.log('Disconnected successfully')
       resetSignMessage()
       setHasUserManuallyConnected(false)
@@ -118,6 +136,8 @@ export const PayButton = ({ price }: { price: number }) => {
       localStorage.setItem('signed', signData)
     }
   }, [signData, address])
+
+
 
 
   return (
@@ -171,7 +191,7 @@ export const PayButton = ({ price }: { price: number }) => {
         </div>
       )}
 
-      {address && !completed && (
+      {address && (
         <button
           disabled={started}
           className="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -184,18 +204,19 @@ export const PayButton = ({ price }: { price: number }) => {
       {errors && <p className='text-stone-800 mt-2 bg-red-200 rounded-md text-sm py-2 px-4'>{errors}</p>}
       <div>
         <TokenBalance />
+        {/* <TokenTransactions/> */}
       </div>
       {txHash && (
-        <div className="text-black">
+        <div className="text-gray-800 bg-slate-500">
           Transaction Hash: <a href={`https://sepolia.etherscan.io/tx/${txHash}`} target="_blank">{txHash}</a>
         </div>
       )}
       {address && (
         <>
-          <button onClick={() => signMessage({ message: 'hello world' })}>
+          {/* <button onClick={() => signMessage({ message: 'hello world' })}>
             Sign Manually (Optional)
-          </button>
-          {signData && <div className='text-black'>Signature: {signData}</div>}
+          </button> */}
+          {signData && <div className='text-gray-800 bg-slate-500'>Signature: {signData}</div>}
           {signError && <div className='text-black '>{"User rejected the transaction !!"}</div>}
         </>
       )}
