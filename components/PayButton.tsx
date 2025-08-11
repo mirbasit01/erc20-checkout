@@ -12,8 +12,7 @@ import { parseUnits } from 'viem'
 
 
 export const PayButton = ({ price }: { price: number }) => {
-  const { connectAsync } = useConnect()
-  const { address } = useAccount()
+   const { address } = useAccount()
   const { writeContractAsync } = useWriteContract()
   const [started, setStarted] = useState(false)
   const [errors, setErrors] = useState<string | undefined>()
@@ -63,6 +62,8 @@ export const PayButton = ({ price }: { price: number }) => {
     try {
       console.log('Disconnecting wallet...')
       await disconnectWallet()
+    localStorage.clear()
+    resetSignMessage()
       console.log('Disconnected successfully')
     } catch (err) {
       console.error('Failed to disconnect', err)
