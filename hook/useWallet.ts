@@ -7,7 +7,7 @@ export const useWallet = () => {
 
     console.log('Available connectors:', connectors.map(c => ({ id: c.id, name: c.name })))
 
-    const connectWallet = async ()  => {
+    const connectWallet = async () => {
         const metaMaskConnector = connectors.find((connector) =>
             connector.id === 'metaMask' || connector.name === 'MetaMask'
         )
@@ -24,7 +24,7 @@ export const useWallet = () => {
                 console.error('Failed to connect wallet:', error)
                 throw error
             }
-        }else {
+        } else {
             console.error('MetaMask connector not found. Make sure MetaMask is installed.')
             alert('MetaMask not found. Please install MetaMask extension.')
             throw new Error('MetaMask not found')
