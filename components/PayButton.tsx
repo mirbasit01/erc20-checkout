@@ -57,26 +57,16 @@ export const PayButton = ({ price }: { price: number }) => {
         setErrors('')
         setTxHash(hash);
         setCompleted(true);
-        // setTimeout(() => {
-        //   setCompleted(true);
-        // }, 3000); 
       } else {
         setErrors("Transaction failed on-chain.");
-        // setTimeout(() => {
-        //   setErrors(undefined);
-        // }, 3000);
       }
       setAmountuser('')
       setToAddress('')
       setStarted(false);
-
     } catch (err) {
       console.log(err)
       setStarted(false)
       setErrors("Payment failed. Please try again.")
-      // setTimeout(() => {
-      //   setErrors(undefined);
-      // }, 3000);
     }
   }
 
