@@ -43,7 +43,7 @@ eth-erc20-checkout/
 
 ```bash
 # 1️⃣ Clone the repository
-git clone https://github.com/your-username/eth-erc20-checkout.git
+git clone https://github.com/mirbasit01/erc20-checkout.git
 
 # 2️⃣ Navigate to project folder
 cd eth-erc20-checkout
