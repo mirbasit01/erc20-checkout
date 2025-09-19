@@ -22,6 +22,7 @@ export const PayButton = ({ price }: { price: number }) => {
   const [completed, setCompleted] = useState(false)
   const [amountuser, setAmountuser] = useState<string>("");
   const [toAddress, setToAddress] = useState<string>("");
+  const [sendsts, setsendsts] = useState<boolean>(false);
   const [txHash, setTxHash] = useState<string | null>(null);
   const { connectWallet, disconnectWallet, isConnected, status } = useWallet()
   const [hasUserManuallyConnected, setHasUserManuallyConnected] = useState(false);
@@ -54,6 +55,7 @@ export const PayButton = ({ price }: { price: number }) => {
       const receipt = await waitForTransactionReceipt(config, { hash });
       console.log("Transaction receipt:", receipt);
       if (receipt.status === 'success') {
+        setsendsts(true)
         setErrors('')
         setTxHash(hash);
         setCompleted(true);
@@ -193,7 +195,10 @@ export const PayButton = ({ price }: { price: number }) => {
       {completed && <p className='text-stone-800 mt-2 bg-green-200 rounded-md text-sm py-2 px-4'>Thank you for your payment.</p>}
       {errors && <p className='text-stone-800 mt-2 bg-red-200 rounded-md text-sm py-2 px-4'>{errors}</p>}
       <div>
-        <TokenBalance />
+        <TokenBalance
+          refreshFlag={sendsts}
+          onRefetched={() => setsendsts(false)}
+        />
         {/* <TokenTransactions/> */}
       </div>
       {txHash && (

@@ -4,14 +4,21 @@ import { useEffect } from 'react';
 import { contractAddress } from '../utils/contractaddress';
 import { contractABI } from '../utils/contractABI';
 
-export default function TokenBalance() {
+type TokenBalanceProps = {
+  refreshFlag: boolean;
+  onRefetched?: () => void;
+};
+
+export default function TokenBalance({ refreshFlag, onRefetched }: TokenBalanceProps) {
   const { address, isConnected } = useAccount();
+  console.log("Received refreshFlag prop:", refreshFlag);
 
   const {
     data,
     refetch,
     isLoading,
-    isError} = useReadContracts({
+    isError
+  } = useReadContracts({
     contracts: [
       {
         address: contractAddress,
@@ -33,12 +40,16 @@ export default function TokenBalance() {
     query: { enabled: !!address } // Only fetch when wallet is connected
   });
 
-  useEffect(() => {
-    if (isConnected) {
-      refetch();
-    }
-  }, [isConnected, address, refetch]);
 
+  useEffect(() => {
+    if (refreshFlag) {
+      refetch().then(() => {
+        onRefetched?.(); 
+      });
+    }
+  }, [refreshFlag, refetch, onRefetched]);
+
+  console.log(data, 'datadatadatadatadatadata')
   if (!isConnected) return <div className="text-black">Please connect wallet</div>;
   if (isLoading) return <div className="text-black">Loading...</div>;
   if (isError) return <div className="text-red-500">Error fetching balance</div>;

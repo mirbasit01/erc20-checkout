@@ -2,6 +2,8 @@
 
 A **Next.js** project that integrates **Wagmi v2** and **Viem** to enable ERC-20 token payments, wallet connection, and blockchain interaction.
 
+![alt text](image-1.png)
+
 ## 📌 Features
 - ✅ Connect Ethereum wallet (MetaMask, WalletConnect, etc.)
 - ✅ Read token balances from ERC-20 smart contracts
